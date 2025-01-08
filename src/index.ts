@@ -1,7 +1,12 @@
-import { Elysia } from "elysia";
+import { app } from "./app";
+import { connectDB } from "./utils/db";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+const startServer = async (): Promise<void> => {
+  await connectDB();
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+  app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
+  });
+};
+
+startServer();
